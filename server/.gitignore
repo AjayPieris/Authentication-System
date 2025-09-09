@@ -1,0 +1,5 @@
+# Sensitive env vars
+.env
+
+# Dependencies
+node_modules/

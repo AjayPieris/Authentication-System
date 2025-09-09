@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  isVerified: {
+  isAccountVerified: {
     type: Boolean,
     default: false,
   },
@@ -36,6 +36,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", userSchema);
+const userModel = mongoose.models.user || mongoose.model("user", userSchema);
 
-export default User;
+export default userModel;
