@@ -4,6 +4,8 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import authRouter from "./routes/authRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +25,7 @@ app.use(
 
 // Routes
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 app.use((_req, res) => {
   res.status(404).json({ message: "Requested resource could not be found." });

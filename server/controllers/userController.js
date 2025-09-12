@@ -1,7 +1,7 @@
-import userModel from "../Models/userModel";
+import userModel from "../Models/userModel.js";
 
 export const getUserData = async (req, res) => {
-  const userId = req.body;
+  const userId = req.user.id;
   try {
     const user = await userModel.findById(userId);
     if (!user) {
