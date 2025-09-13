@@ -3,32 +3,44 @@ import { useNavigate } from 'react-router-dom'
 import { assets } from "../assets/assets";
 import { AppContent } from "../context/AppContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Login() {
 
 const { backendUrl, setIsLoggedin } = useContext(AppContent);  
 
 const onSubmitHandler = async (e) => {
-    try{
-        e.preventDefault();
-        axios.defaults.withCredentials = true;
+  e.preventDefault();
+  axios.defaults.withCredentials = true;
 
-        if(state === "Sign Up"){
-          const {data} = await axios.post(backendUrl+'/api/auth/register', 
-           { name,
-            email,
-            password}
-       )
-         if(data.success){
-          setIsLoggedin(true);
-          navigate("/");
-         }
-      } else {
-          alert(data.message);
-    }}
-    catch(err){
-      console.log("Error in form submit", err);
-    }};
+  try {
+    let data;
+
+    if (state === "Sign Up") {
+      const res = await axios.post(`${backendUrl}/api/auth/register`, {
+        name,
+        email,
+        password,
+      });
+      data = res.data;
+    } else {
+      const res = await axios.post(`${backendUrl}/api/auth/login`, {
+        email,
+        password,
+      });
+      data = res.data;
+    }
+
+    if (data.success) {
+      setIsLoggedin(true);
+      navigate("/");
+    } else {
+      toast.error(data.message || "Something went wrong");
+    }
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Server error");
+  }
+};
 
   const [state, setState] = useState("Sign Up"); // Login or Sign Up
   const [name, setName] = useState("");
