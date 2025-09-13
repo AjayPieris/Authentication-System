@@ -9,6 +9,7 @@ import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
+const allowedOrigins = 'http://localhost:5173'; // Replace with your client's URL
 
 // Connect to MongoDB once
 connectDB();
@@ -19,7 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    credentials: true
+    origin: allowedOrigins, 
+    credentials: true,
   })
 );
 
@@ -27,10 +29,9 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
-app.use((_req, res) => {
-  res.status(404).json({ message: "Requested resource could not be found." });
+app.get("/", (req, res) => {
+  res.send("Welcome to the Authentication System API");
 });
-
 
 app.listen(port, () => {
   console.log(`✅ Server is running on http://localhost:${port}`);
