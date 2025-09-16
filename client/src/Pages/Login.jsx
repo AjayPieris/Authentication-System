@@ -1,46 +1,47 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { AppContent } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 function Login() {
+  const { backendUrl, setIsLoggedin, getuserData } = useContext(AppContent);
 
-const { backendUrl, setIsLoggedin } = useContext(AppContent);  
-
-const onSubmitHandler = async (e) => {
-  e.preventDefault();
-  axios.defaults.withCredentials = true;
+  const onSubmitHandler = async (e) => {
+  e.preventDefault()
+  axios.defaults.withCredentials = true
 
   try {
-    let data;
+    let response
 
     if (state === "Sign Up") {
-      const res = await axios.post(`${backendUrl}/api/auth/register`, {
+      response = await axios.post(backendUrl + "/api/auth/register", {
         name,
         email,
         password,
-      });
-      data = res.data;
+      })
     } else {
-      const res = await axios.post(`${backendUrl}/api/auth/login`, {
+      response = await axios.post(backendUrl + "/api/auth/login", {
         email,
         password,
-      });
-      data = res.data;
+      })
     }
 
+    const data = response.data
+
     if (data.success) {
-      setIsLoggedin(true);
-      navigate("/");
+      setIsLoggedin(true)
+      getuserData()
+      navigate("/")
     } else {
-      toast.error(data.message || "Something went wrong");
+      toast.error(data.message)
     }
-  } catch (err) {
-    toast.error(err.response?.data?.message || "Server error");
+  } catch (error) {
+    toast.error(error.message)
   }
-};
+}
+
 
   const [state, setState] = useState("Sign Up"); // Login or Sign Up
   const [name, setName] = useState("");
@@ -106,8 +107,10 @@ const onSubmitHandler = async (e) => {
               />
             </div>
             {state === "Login" && (
-              <p onClick={() => navigate("/reset-password")}
-               className="mb-4 text-indigo-500 cursor-pointer">
+              <p
+                onClick={() => navigate("/reset-password")}
+                className="mb-4 text-indigo-500 cursor-pointer"
+              >
                 Forgot Password?
               </p>
             )}
