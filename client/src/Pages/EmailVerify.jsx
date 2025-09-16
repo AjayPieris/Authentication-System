@@ -3,6 +3,31 @@ import { useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 
 function EmailVerify() {
+
+  const inputRefs = React.useRef([]);
+  const navigate = useNavigate();
+
+  const handleInput = (e, index) => {
+    const value = e.target.value; 
+    if (value) {
+      // Move to the next input if the current one is filled
+      if (index < 5) {
+        inputRefs.current[index + 1].focus();
+      }
+    } else {
+      // Move to the previous input if the current one is empty
+      if (index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if(e.key === 'Backspace' && e.target.value === '' && index > 0) {
+      inputRefs.current[index - 1].focus();
+  }
+}
+
   return (
     <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400">
       <img
@@ -21,6 +46,9 @@ function EmailVerify() {
                   required
                   type="text" 
                   maxLength="1" 
+                  ref={e => inputRefs.current[index] = e}
+                  onInput={(e)=> handleInput(e, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                   className='w-10 h-10 text-center text-lg rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white'
                 />
               ))}
