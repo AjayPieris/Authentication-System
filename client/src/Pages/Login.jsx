@@ -38,7 +38,7 @@ function Login() {
       toast.error(data.message)
     }
   } catch (error) {
-    toast.error(error.message)
+    toast.error('Username or Password is incorrect')
   }
 }
 

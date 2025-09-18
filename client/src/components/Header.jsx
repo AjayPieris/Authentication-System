@@ -2,8 +2,10 @@ import React from 'react'
 import { assets } from '../assets/assets'
 import { AppContent } from '../context/AppContext'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+  const Navigate = useNavigate();
 
 const {userData} = useContext(AppContent);
 
@@ -17,7 +19,7 @@ const {userData} = useContext(AppContent);
 
       <p className='mb-8 max-w-md'>Let's build something amazing together!</p>
 
-      <button className='border border-gray-500 rounded-full px-8 py-2.5 hover:bg-gray-500 transition-all'>Get Started</button>
+      <button className='border border-gray-500 rounded-full px-8 py-2.5 hover:bg-gray-500 transition-all' onClick={() => Navigate('/login')}>Get Started</button>
     </div>
   )
 }

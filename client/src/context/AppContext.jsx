@@ -22,15 +22,11 @@ export const AppContextProvider = (props) => {
   }
 
   const getAuthState = async () => {
-  try {
     const { data } = await axios.get(backendUrl + '/api/auth/is-authenticated');
     if (data.success) {
       setIsLoggedin(true);
-      getuserData();
-    }
-  } catch (error) {
-    toast.error(error.message);
-  }
+      getuserData(); 
+  } 
 };
 
 useEffect(() => {
