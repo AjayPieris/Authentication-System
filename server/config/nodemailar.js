@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import 'dotenv/config';
 
 // Brevo (Sendinblue) SMTP transport. Port 587 uses STARTTLS (secure: false)
 const transporter = nodemailer.createTransport({
