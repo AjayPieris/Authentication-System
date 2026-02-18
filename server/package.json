@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "type" : "module",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "build": "npm install --legacy-peer-deps"
   },
   "author": "",
   "license": "ISC",

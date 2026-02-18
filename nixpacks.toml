@@ -2,7 +2,10 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["cd server && npm install"]
+cmds = [
+  "cd server",
+  "npm ci --legacy-peer-deps || npm install --legacy-peer-deps"
+]
 
 [start]
 cmd = "cd server && npm start"
