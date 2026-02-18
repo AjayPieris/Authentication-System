@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 // Allow multiple origins for CORS (local + production)
 const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(",")
+  ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim())
   : ["http://localhost:5173"];
 
 console.log("🔐 Allowed CORS origins:", allowedOrigins);
@@ -41,9 +41,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Handle preflight requests
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
