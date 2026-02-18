@@ -100,6 +100,12 @@ Visit your Vercel URL and test:
 
 ## Troubleshooting 🔧
 
+### If Railway can't build ("Railpack could not determine how to build"):
+
+- Railway config files already created: `nixpacks.toml` and `railway.json` ✅
+- Push to GitHub: `git add . && git commit -m "Add config" && git push`
+- Railway will auto-redeploy
+
 ### If you get CORS errors:
 
 - Check `CLIENT_URL` in Railway matches Vercel URL exactly

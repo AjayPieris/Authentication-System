@@ -145,6 +145,25 @@ Your backend is now live! Note down the Railway URL.
 
 ## Troubleshooting
 
+### Railway Build Errors ("Railpack could not determine how to build the app")
+
+**Solution:**
+
+1. Make sure `nixpacks.toml` and `railway.json` exist in the `server/` folder (already created ✅)
+2. Push the changes to GitHub:
+   ```bash
+   git add .
+   git commit -m "Add Railway config files"
+   git push
+   ```
+3. Railway will auto-redeploy
+4. If still failing, manually trigger redeploy in Railway dashboard
+
+**Alternative:** In Railway Settings → Deploy, set:
+
+- **Build Command**: `npm install`
+- **Start Command**: `npm start`
+
 ### CORS Errors
 
 - Make sure `CLIENT_URL` in Railway matches your Vercel URL exactly
