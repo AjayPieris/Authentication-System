@@ -1,3 +1,0 @@
-# Procfile for Railway
-
-web: node server.js
