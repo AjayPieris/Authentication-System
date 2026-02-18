@@ -16,13 +16,13 @@ function Login() {
       let response;
 
       if (state === "Sign Up") {
-        response = await axios.post(backendUrl + "/api/auth/register", {
+        response = await axios.post(backendUrl + "/register", {
           name,
           email,
           password,
         });
       } else {
-        response = await axios.post(backendUrl + "/api/auth/login", {
+        response = await axios.post(backendUrl + "/login", {
           email,
           password,
         });
