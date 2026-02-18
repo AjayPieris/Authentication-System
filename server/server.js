@@ -17,10 +17,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 // Connect to MongoDB once
 connectDB();
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// Middleware - CORS must be before routes
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -33,8 +30,14 @@ app.use(
       }
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRouter);
