@@ -8,7 +8,7 @@ import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
-const allowedOrigins = "http://localhost:5173"; // Replace with your client's URL
+const allowedOrigins = process.env.CLIENT_URL || "http://localhost:5173";
 
 // Connect to MongoDB once
 connectDB();
