@@ -21,10 +21,17 @@ export const AppContextProvider = (props) => {
   };
 
   const getAuthState = async () => {
-    const { data } = await axios.get(backendUrl + "/api/auth/is-authenticated");
-    if (data.success) {
-      setIsLoggedin(true);
-      getuserData();
+    try {
+      const { data } = await axios.get(
+        backendUrl + "/api/auth/is-authenticated",
+      );
+      if (data.success) {
+        setIsLoggedin(true);
+        getuserData();
+      }
+    } catch (error) {
+      // User is not authenticated - this is normal, don't show error
+      setIsLoggedin(false);
     }
   };
 
