@@ -16,25 +16,15 @@ export const AppContextProvider = (props) => {
       const { data } = await axios.get(backendUrl + "/api/user/data");
       data.success ? setUserData(data.userData) : toast.error(data.message);
     } catch (error) {
-      // Only show error if it's not a 401 (unauthorized)
-      if (error.response?.status !== 401) {
-        toast.error(error.message);
-      }
+      toast.error(error.message);
     }
   };
 
   const getAuthState = async () => {
-    try {
-      const { data } = await axios.get(
-        backendUrl + "/api/auth/is-authenticated",
-      );
-      if (data.success) {
-        setIsLoggedin(true);
-        getuserData();
-      }
-    } catch (error) {
-      // User is not authenticated - this is normal for first-time visitors
-      setIsLoggedin(false);
+    const { data } = await axios.get(backendUrl + "/api/auth/is-authenticated");
+    if (data.success) {
+      setIsLoggedin(true);
+      getuserData();
     }
   };
 
