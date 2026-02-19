@@ -45,6 +45,17 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Authentication System API");
 });
 
+// Debug endpoint - check server configuration
+app.get("/api/debug", (req, res) => {
+  res.json({
+    nodeEnv: process.env.NODE_ENV,
+    allowedOrigins: allowedOrigins,
+    hasCookie: !!req.cookies.token,
+    hasJwtSecret: !!process.env.JWT_SECRET,
+    hasSmtpConfig: !!(process.env.SMTP_USER && process.env.SMTP_PASS),
+  });
+});
+
 app.listen(port, () => {
   console.log(`✅ Server is running on http://localhost:${port}`);
 });

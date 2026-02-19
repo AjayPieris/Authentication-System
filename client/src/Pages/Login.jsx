@@ -32,7 +32,13 @@ function Login() {
 
       if (data.success) {
         setIsLoggedin(true);
-        getuserData();
+        await getuserData();
+        toast.success(
+          data.message ||
+            (state === "Sign Up"
+              ? "Account created successfully!"
+              : "Login successful!"),
+        );
         navigate("/");
       } else {
         toast.error(data.message);
