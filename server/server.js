@@ -8,7 +8,10 @@ import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
-const allowedOrigins = process.env.CLIENT_URL || "http://localhost:5173";
+
+// Parse CLIENT_URL - supports comma-separated multiple origins
+const clientUrlString = process.env.CLIENT_URL || "http://localhost:5173";
+const allowedOrigins = clientUrlString.split(",").map((url) => url.trim());
 
 // Connect to MongoDB once
 connectDB();
@@ -19,7 +22,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
