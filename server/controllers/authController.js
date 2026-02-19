@@ -133,9 +133,11 @@ export const sendVerifyOtp = async (req, res) => {
       ),
     };
 
-    console.log("Sending OTP email to:", user.email);
-    await transporter.sendMail(mailOptions);
-    console.log("OTP email sent successfully");
+    // Send email asynchronously (non-blocking)
+    transporter
+      .sendMail(mailOptions)
+      .then(() => console.log("OTP email sent successfully to:", user.email))
+      .catch((err) => console.error("Failed to send OTP email:", err.message));
 
     res.json({ success: true, message: "OTP sent to your email" });
   } catch (error) {
@@ -166,7 +168,16 @@ export const resendVerifyOtp = async (req, res) => {
       subject: "Resend OTP for Account Verification",
       text: `Your new OTP for account verification is: ${otp}. It is valid for 10 minutes.`,
     };
-    await transporter.sendMail(mailOptions);
+
+    // Send email asynchronously (non-blocking)
+    transporter
+      .sendMail(mailOptions)
+      .then(() =>
+        console.log("Resend OTP email sent successfully to:", user.email),
+      )
+      .catch((err) =>
+        console.error("Failed to resend OTP email:", err.message),
+      );
 
     res.json({ success: true, message: "OTP resent to your email" });
   } catch (error) {
@@ -236,7 +247,16 @@ export const sendResetOtp = async (req, res) => {
         user.email,
       ),
     };
-    await transporter.sendMail(mailOptions);
+
+    // Send email asynchronously (non-blocking)
+    transporter
+      .sendMail(mailOptions)
+      .then(() =>
+        console.log("Reset OTP email sent successfully to:", user.email),
+      )
+      .catch((err) =>
+        console.error("Failed to send reset OTP email:", err.message),
+      );
 
     res.json({ success: true, message: "OTP sent to your email" });
   } catch (error) {
